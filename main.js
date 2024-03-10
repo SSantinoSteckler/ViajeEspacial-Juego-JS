@@ -29,6 +29,10 @@ $divContador.innerHTML = `<p>Timer : 0s</p><p>Record : 0s`;
 //Record
 let record = localStorage.getItem('record') || 0;
 
+//Intervalos
+let createInterval;
+let contadorInterval;
+
 $buttonIniciar.addEventListener('click', () => {
   if ($input.value > 10 || $input.value < 0.1) {
     $cuadro.innerHTML = '<p>UN NUMERO ENTRE 0.1 Y 10</P>';
@@ -48,12 +52,18 @@ $buttonIniciar.addEventListener('click', () => {
     definirUsuario();
 
     let contador = 0;
+    clearInterval(contadorInterval);
 
-    let contadorInterval = setInterval(() => {
+    contadorInterval = setInterval(() => {
       contador = contador + 1;
       $divContador.innerHTML = `<p>Timer: ${contador}s</p>
       <p>Record : ${record}s</p>`;
     }, 1000);
+
+    if (createInterval) {
+      clearInterval(createInterval);
+    }
+    createInterval = setInterval(createCajas, $input.value * 1000);
 
     function moverUsuario(e) {
       switch (e.key) {
@@ -118,13 +128,14 @@ $buttonIniciar.addEventListener('click', () => {
           if (record < contador) {
             record = contador;
             localStorage.setItem('record', record);
-            $divContador.innerHTML = `<p>Timer : 0</p>
+            $divContador.innerHTML = `<p>Timer : 0s</p>
             <p>Record : ${record}`;
           } else {
-            $divContador.innerHTML = `<p>Timer : 0</p>
+            $divContador.innerHTML = `<p>Timer : 0s</p>
             <p>Record : ${record}</p>`;
           }
 
+          document.removeEventListener('keydown', moverUsuario);
           clearInterval(createInterval);
           clearInterval(intervalId);
           clearInterval(contadorInterval);
@@ -133,11 +144,6 @@ $buttonIniciar.addEventListener('click', () => {
 
       const intervalId = setInterval(moveCajas, 80);
     }
-  }
-
-  let createInterval;
-  if (!createInterval) {
-    createInterval = setInterval(createCajas, $input.value * 1000);
   }
 });
 
