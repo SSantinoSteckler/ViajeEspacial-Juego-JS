@@ -1,0 +1,126 @@
+
+const $cuadro = document.querySelector('.container');
+const $buttonIniciar = document.querySelector('.button-iniciar');
+const $buttonDetener = document.querySelector('.button-detener');
+const $input = document.getElementById('inputID');
+
+//Cuadro
+const anchoCuadro = 850;
+const altoDeCuadro = 550;
+
+//Usuario
+const anchoUsuario = 50;
+const altoUsuario = 50;
+
+//altura de caja
+const alturaCaja = 50;
+
+//pocision inicial de usuario
+const pocisionInicialUsuario = [380, 10];
+let pocisionActualUsuario = pocisionInicialUsuario;
+
+//musica
+const $musica = document.getElementById('musica');
+$musica.volume = 0.2;
+
+let intervaloMeteoritos; // Variable global para almacenar el intervalo de meteoritos
+
+$buttonIniciar.addEventListener('click', () => {
+  if ($input.value > 10 || $input.value < 0.1) {
+    $cuadro.innerHTML = '<p>UN NUMERO ENTRE 0.1 Y 10</P>';
+  } else {
+    $musica.play();
+    $cuadro.innerHTML = '';
+
+    function definirUsuario() {
+      usuario.style.left = pocisionActualUsuario[0] + 'px';
+      usuario.style.bottom = pocisionActualUsuario[1] + 'px';
+    }
+
+    const usuario = document.createElement('div');
+    usuario.classList.add('usuario');
+    $cuadro.appendChild(usuario);
+
+    definirUsuario();
+
+    function moverUsuario(e) {
+      switch (e.key) {
+        case 'ArrowLeft':
+          if (pocisionActualUsuario[0] > 0) {
+            pocisionActualUsuario[0] -= 10;
+            definirUsuario();
+          }
+          break;
+        case 'ArrowRight':
+          if (pocisionActualUsuario[0] < anchoCuadro - anchoUsuario) {
+            pocisionActualUsuario[0] += 10;
+            definirUsuario();
+          }
+          break;
+      }
+    }
+
+    document.addEventListener('keydown', moverUsuario);
+
+    function createCajas() {
+      const cajas = document.createElement('div');
+      cajas.classList.add('cajas');
+      $cuadro.appendChild(cajas);
+
+      let xCord = Math.random() * 780;
+
+      cajas.style.left = xCord + 'px';
+      cajas.style.top = 0;
+
+      const coordenadas = {
+        x: xCord,
+        y: 0,
+      };
+
+      function moveCajas() {
+        coordenadas.y += 12;
+
+        cajas.style.top = coordenadas.y + 'px';
+
+        if (coordenadas.y > altoDeCuadro - altoUsuario) {
+          $cuadro.removeChild(cajas);
+          clearInterval(intervalId);
+        }
+
+        const cajaTop = cajas.offsetTop;
+        const cajaBottom = cajaTop + cajas.clientHeight;
+        const usuarioTop = usuario.offsetTop + 7;
+        const usuarioBottom = usuarioTop + usuario.clientHeight;
+
+        if (
+          usuarioBottom > cajaTop &&
+          usuarioTop < cajaBottom &&
+          pocisionActualUsuario[0] + anchoUsuario > xCord &&
+          pocisionActualUsuario[0] < xCord + cajas.clientWidth
+        ) {
+          $musica.pause();
+          document.removeEventListener('keydown', moverUsuario);
+
+          $cuadro.innerHTML = '<p>HAZ COLISIONADO</p>';
+          
+          clearInterval(intervalId);
+        }
+      }
+
+      const intervalId = setInterval(moveCajas, 80);
+    }
+
+    // Verifica si ya hay un intervalo activo antes de crear uno nuevo
+    if (!intervaloMeteoritos) {
+      intervaloMeteoritos = setInterval(createCajas, $input.value * 1000);
+    }
+  }
+});
+
+$buttonDetener.addEventListener('click', detenerJuego);
+
+function detenerJuego() {
+  // Limpia el intervalo de meteoritos al detener el juego
+  clearInterval(intervaloMeteoritos);
+  location.reload();
+} 

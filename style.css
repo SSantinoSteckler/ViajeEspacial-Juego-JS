@@ -1,0 +1,138 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: black;
+  background-image: url(./img/200206_01_Particle-star-fall-seamless-loop.jpg);
+  padding: 20px;
+}
+
+label {
+  font-size: 1.5rem;
+  color: white;
+}
+
+#inputID {
+  width: 20%;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 1.5rem;
+}
+
+.container {
+  width: 850px;
+  height: 550px;
+  border: solid 4px white;
+  position: relative;
+  background-image: url(./img/200206_01_Particle-star-fall-seamless-loop.jpg);
+  background-size: cover;
+  border-radius: 9px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container p {
+  color: rgb(185, 23, 23);
+  font-weight: bolder;
+  text-shadow: 5px 5px 3px rgba(255, 255, 255, 0.897);
+  text-align: center;
+  font-size: 5rem;
+}
+
+.usuario {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  background-image: url('https://www.laps4.com/foro/trofeos/psntrofeos/124303.PNG');
+  background-size: cover;
+  cursor: pointer;
+}
+
+.cajas {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  bottom: 30px;
+  left: 300px;
+  background-image: url(./img/gratis-png-2013-meteorito-ruso-meteorito-meteoroide-asteroide-meteorito-asteroide-thumbnail.jpg);
+  background-size: cover;
+  cursor: pointer;
+}
+
+.div-date {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  width: 100%;
+  gap: 40px;
+}
+
+.div-contador {
+  color: rgb(204, 204, 24);
+  font-weight: bolder;
+  align-self: center;
+  font-size: 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  max-width: 500px;
+  width: 100%;
+}
+
+button {
+  padding: 20px;
+  border-radius: 20px;
+  width: 100%;
+  height: 80px;
+  cursor: pointer;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.521);
+  color: white;
+  border: none;
+  font-size: 1.4rem;
+  transition: all 0.2s ease;
+}
+
+button:first-child {
+  background-color: green;
+  box-shadow: 10px 10px 0px rgba(0, 128, 0, 0.623);
+}
+
+button:first-child:hover {
+  background-color: rgba(0, 128, 0, 0.514);
+}
+button:nth-child(2) {
+  background-color: red;
+  box-shadow: 10px 10px 0px rgba(255, 0, 0, 0.568);
+}
+
+button:nth-child(2):hover {
+  background-color: rgba(167, 23, 23, 0.658);
+}
+
+span {
+  color: white;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+span a:hover {
+  color: blueviolet;
+}
